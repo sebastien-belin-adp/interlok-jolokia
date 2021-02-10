@@ -15,14 +15,14 @@ managementComponents=jetty:jmx:jolokia
 
 ## Running
 
-Using your favourite HTTP GET/POST tool, make a POST request to the running Interlok Jolokia instance at `http://localhost:8081/jolokia`:
+Using your favourite HTTP GET/POST tool, make a POST request to the running Interlok Jolokia instance at `http://localhost:8081/jolokia/`:
 
 ### Read
 
 Request
 
 ```
-curl --location --request POST 'http://localhost:8081/jolokia' --header 'Content-Type: application/json' --header 'Accept: application/json' \
+curl --location --request POST 'http://localhost:8081/jolokia/' --header 'Content-Type: application/json' --header 'Accept: application/json' \
 --data-raw '{
   "type" : "READ",
   "mbean" : "com.adaptris:type=Adapter,id=MyInterlokInstance",
@@ -50,7 +50,7 @@ Response
 Request
 
 ```
-curl --location --request POST 'http://localhost:8081/jolokia' --header 'Content-Type: application/json' --header 'Accept: application/json' \
+curl --location --request POST 'http://localhost:8081/jolokia/' --header 'Content-Type: application/json' --header 'Accept: application/json' \
 --data-raw '{
   "type" : "EXEC",
   "mbean" : "com.adaptris:type=Adapter,id=MyInterlokInstance",
@@ -78,7 +78,7 @@ Response
 Request
 
 ```
-curl --location --request POST 'http://localhost:8081/jolokia' --header 'Content-Type: application/json' --header 'Accept: application/json' \
+curl --location --request POST 'http://localhost:8081/jolokia/' --header 'Content-Type: application/json' --header 'Accept: application/json' \
 --data-raw '{
   "type" : "SEARCH",
   "mbean" : "com.adaptris:type=Workflow,adapter=MyInterlokInstance,channel=*,id=*"
