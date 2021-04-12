@@ -3,8 +3,8 @@ plugins {
   id 'maven'
   id 'maven-publish'
   id 'jacoco'
-  id 'com.github.spotbugs' version '4.6.0'
-  id 'org.owasp.dependencycheck' version '6.0.5'
+  id 'com.github.spotbugs' version '4.7.0'
+  id 'org.owasp.dependencycheck' version '6.1.2'
 }
 
 ext {
@@ -24,12 +24,14 @@ ext {
   interlokCommonJavadocs= project.hasProperty('interlokJavadocs') ? project.getProperty('interlokJavadocs') : javadocsBaseUrl + "/interlok-common/" + interlokCoreVersion
   interlokLicenseJavadocs= project.hasProperty('interlokLicenseJavadocs') ? project.getProperty('interlokLicenseJavadocs') : javadocsBaseUrl + "/interlok-licensing/" + interlokCoreVersion
 
-  componentName='Interlok JMX Jolokia'
+  componentName='Interlok JMX/Jolokia'
+  componentDesc="Tunnelling JMX calls via Jolokia"
+
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
   slf4jVersion="1.7.30"
-  log4j2Version = '2.14.0'
-  mockitoVersion = '3.7.7'
+  log4j2Version = '2.14.1'
+  mockitoVersion = '3.8.0'
   jolokiaVersion = '1.6.2'
 }
 
@@ -101,6 +103,11 @@ configurations {
   all*.exclude group: 'javax.validation', module: 'validation-api'
   all*.exclude group: 'javax.activation', module: 'activation'
   all*.exclude group: 'javax.activation', module: 'javax.activation-api'
+
+
+  // INTERLOK-3740 switch from jcraft to com.github.mwiede jsch fork.
+  all*.exclude group: 'com.jcraft', module: 'jsch'
+
 }
 
 configurations.all {
@@ -119,7 +126,7 @@ dependencies {
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion")
   umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
 
-  testCompile ('junit:junit:4.13.1')
+  testCompile ('junit:junit:4.13.2')
   testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing=true }
   testCompile ("org.mockito:mockito-core:$mockitoVersion")
   testCompile ("org.mockito:mockito-inline:$mockitoVersion")
@@ -162,6 +169,7 @@ task generateVersion {
     versionFile.getParentFile().mkdirs()
     ant.propertyfile(file: versionFile) {
       entry(key: 'component.name', value: componentName)
+      entry(key: 'component.description', value: componentDesc)
       entry(key: 'groupId', value: project.group)
       entry(key: 'artifactId', value: project.name)
       entry(key: 'build.version', value: project.version)
@@ -223,7 +231,7 @@ publishing {
 
       pom.withXml {
         asNode().appendNode("name", componentName)
-        asNode().appendNode("description", "Jolokia management component for Interlok.")
+        asNode().appendNode("description", componentDesc)
         def properties = asNode().appendNode("properties")
         properties.appendNode("target", "4.0.0+")
         properties.appendNode("tags", "jolokia jmx http management")
