@@ -3,13 +3,13 @@ plugins {
   id 'maven'
   id 'maven-publish'
   id 'jacoco'
-  id 'com.github.spotbugs' version '4.7.0'
-  id 'org.owasp.dependencycheck' version '6.1.2'
+  id 'com.github.spotbugs' version '4.7.1'
+  id 'org.owasp.dependencycheck' version '6.2.0'
 }
 
 ext {
-  interlokCoreVersion = project.hasProperty('interlokCoreVersion') ? project.getProperty('interlokCoreVersion') : '4.0-SNAPSHOT'
-  releaseVersion = project.hasProperty('releaseVersion') ? project.getProperty('releaseVersion') : '4.0-SNAPSHOT'
+  interlokCoreVersion = project.hasProperty('interlokCoreVersion') ? project.getProperty('interlokCoreVersion') : '4.1-SNAPSHOT'
+  releaseVersion = project.hasProperty('releaseVersion') ? project.getProperty('releaseVersion') : '4.1-SNAPSHOT'
   nexusBaseUrl = project.hasProperty('nexusBaseUrl') ? project.getProperty('nexusBaseUrl') : 'https://nexus.adaptris.net/nexus'
   javadocsBaseUrl = nexusBaseUrl + "/content/sites/javadocs/com/adaptris"
   mavenPublishUrl = project.hasProperty('mavenPublishUrl') ? project.getProperty('mavenPublishUrl') : nexusBaseUrl + '/content/repositories/snapshots'
@@ -31,7 +31,7 @@ ext {
   organizationUrl = "http://interlok.adaptris.net"
   slf4jVersion="1.7.30"
   log4j2Version = '2.14.1'
-  mockitoVersion = '3.8.0'
+  mockitoVersion = '3.11.0'
   jolokiaVersion = '1.6.2'
 }
 
@@ -130,7 +130,7 @@ dependencies {
   testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing=true }
   testCompile ("org.mockito:mockito-core:$mockitoVersion")
   testCompile ("org.mockito:mockito-inline:$mockitoVersion")
-  testCompile ("org.awaitility:awaitility:4.0.3")
+  testCompile ("org.awaitility:awaitility:4.1.0")
   // INTERLOK-3233 we still need log4j since we're doing MDC stuffs.
   testCompile ("org.apache.logging.log4j:log4j-core:$log4j2Version")
   testCompile ("org.apache.logging.log4j:log4j-api:$log4j2Version")
