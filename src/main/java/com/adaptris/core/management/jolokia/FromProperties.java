@@ -16,11 +16,13 @@
 package com.adaptris.core.management.jolokia;
 
 import java.util.Properties;
-
+import javax.servlet.ServletContext;
 import org.eclipse.jetty.http.HttpCompliance;
 import org.eclipse.jetty.security.Authenticator;
+import org.eclipse.jetty.security.Authenticator.AuthConfiguration;
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
+import org.eclipse.jetty.security.IdentityService;
 import org.eclipse.jetty.security.LoginService;
 import org.eclipse.jetty.security.SecurityHandler;
 import org.eclipse.jetty.security.authentication.BasicAuthenticator;
@@ -89,6 +91,18 @@ final class FromProperties extends ServerBuilder {
 
       ConstraintMapping constraintMapping = constraint();
       securityHandler.addConstraintMapping(constraintMapping);
+    } else {
+      // https://github.com/adaptris/interlok/pull/788
+      securityHandler.setAuthenticatorFactory(new Authenticator.Factory() {
+
+        @Override
+        public Authenticator getAuthenticator(Server server, ServletContext context,
+            AuthConfiguration configuration, IdentityService identityService,
+            LoginService loginService) {
+          return null;
+        }
+        
+      });
     }
 
     securityHandler.setHandler(handler);
