@@ -1,16 +1,15 @@
 package com.adaptris.core.management.jolokia;
 
+import com.adaptris.core.management.webserver.JettyServerManager;
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adaptris.core.management.jetty.JettyServerComponent;
-import com.adaptris.core.management.webserver.JettyServerManager;
-import com.adaptris.core.management.webserver.WebServerManagementUtil;
-
 class JettyServerWrapperImpl implements JettyServerWrapper {
 
   protected transient Logger log = LoggerFactory.getLogger(this.getClass().getName());
+  private static final String FRIENDLY_NAME = JolokiaComponent.class.getSimpleName();
+  protected static final String SERVER_ID = JolokiaComponent.class.getSimpleName();
 
   private Server server;
 
@@ -20,8 +19,7 @@ class JettyServerWrapperImpl implements JettyServerWrapper {
 
   @Override
   public void register() {
-    final JettyServerManager jettyManager = (JettyServerManager) WebServerManagementUtil.getServerManager();
-    jettyManager.addServer(server);
+    JettyServerManager.getInstance().addServer(SERVER_ID, server);
   }
 
   @Override
@@ -29,10 +27,10 @@ class JettyServerWrapperImpl implements JettyServerWrapper {
     try {
       if (server.isStopped()) {
         server.start();
-        log.debug("{} Started", JettyServerComponent.class.getSimpleName());
+        log.debug("{} Started", FRIENDLY_NAME);
       }
     } catch (final Exception ex) {
-      log.error("Exception while starting Jetty", ex);
+      log.error("Exception while starting Jolokia(Jetty)", ex);
     }
   }
 
@@ -41,9 +39,9 @@ class JettyServerWrapperImpl implements JettyServerWrapper {
     try {
       server.stop();
       server.join();
-      log.debug("{} Stopped", JettyServerComponent.class.getSimpleName());
+      log.debug("{} Stopped", FRIENDLY_NAME);
     } catch (final Exception ex) {
-      log.error("Exception while stopping Jetty", ex);
+      log.error("Exception while stopping Jolokia(Jetty)", ex);
     }
 
   }
@@ -51,13 +49,11 @@ class JettyServerWrapperImpl implements JettyServerWrapper {
   @Override
   public void destroy() {
     try {
-      final JettyServerManager jettyManager = (JettyServerManager) WebServerManagementUtil.getServerManager();
-      jettyManager.removeServer(server);
+      JettyServerManager.getInstance().removeServer(SERVER_ID);
       server.destroy();
-      log.debug("{} Destroyed", JettyServerComponent.class.getSimpleName());
+      log.debug("{} Destroyed", FRIENDLY_NAME);
     } catch (final Exception ex) {
-      log.error("Exception while destroying Jetty", ex);
+      log.error("Exception while destroying Jolokia(Jetty)", ex);
     }
   }
-
 }

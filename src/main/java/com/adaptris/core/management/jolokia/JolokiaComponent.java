@@ -38,18 +38,12 @@ public class JolokiaComponent extends MgmtComponentImpl {
 
   private static final long STARTUP_WAIT = TimeUnit.SECONDS.toMillis(60L);
 
-  private ClassLoader classLoader;
   private Properties properties;
 
   private JettyServerWrapper wrapper = new JettyServerWrapper() {
   };
 
   public JolokiaComponent() {
-  }
-
-  @Override
-  public void setClassLoader(final ClassLoader classLoader) {
-    this.classLoader = classLoader;
   }
 
   @Override
@@ -62,9 +56,7 @@ public class JolokiaComponent extends MgmtComponentImpl {
    */
   @Override
   public void start() throws Exception {
-    if (classLoader == null) {
-      classLoader = Thread.currentThread().getContextClassLoader();
-    }
+    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     final CyclicBarrier barrier = new CyclicBarrier(2);
     // This is to make sure we don't break the barrier before the real delay is up.
     //

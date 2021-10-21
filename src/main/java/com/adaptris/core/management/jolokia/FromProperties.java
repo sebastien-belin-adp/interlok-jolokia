@@ -48,10 +48,12 @@ final class FromProperties extends ServerBuilder {
 
   private final static String JOLOKIA_SERVLET_PATH = "/*";
   private final static String DEFAULT_JOLOKIA_CONTEXT_PATH = "/jolokia";
-
+  public static final String JOLOKIA_PORT_CFG_KEY = "jolokiaPort";
   public final static String JOLOKIA_CONTEXT_PATH_CFG_KEY = "jolokiaContextPath";
   public final static String JOLOKIA_USERNAME_CFG_KEY = "jolokiaUsername";
   public final static String JOLOKIA_PASSWORD_CFG_KEY = "jolokiaPassword";
+
+
 
   public FromProperties(Properties initialConfig) {
     super(initialConfig);
