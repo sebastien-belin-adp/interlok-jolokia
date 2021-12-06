@@ -16,11 +16,13 @@
 package com.adaptris.core.management.jolokia;
 
 import java.util.Properties;
-
+import javax.servlet.ServletContext;
 import org.eclipse.jetty.http.HttpCompliance;
 import org.eclipse.jetty.security.Authenticator;
+import org.eclipse.jetty.security.Authenticator.AuthConfiguration;
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
+import org.eclipse.jetty.security.IdentityService;
 import org.eclipse.jetty.security.LoginService;
 import org.eclipse.jetty.security.SecurityHandler;
 import org.eclipse.jetty.security.authentication.BasicAuthenticator;
@@ -46,10 +48,12 @@ final class FromProperties extends ServerBuilder {
 
   private final static String JOLOKIA_SERVLET_PATH = "/*";
   private final static String DEFAULT_JOLOKIA_CONTEXT_PATH = "/jolokia";
-
+  public static final String JOLOKIA_PORT_CFG_KEY = "jolokiaPort";
   public final static String JOLOKIA_CONTEXT_PATH_CFG_KEY = "jolokiaContextPath";
   public final static String JOLOKIA_USERNAME_CFG_KEY = "jolokiaUsername";
   public final static String JOLOKIA_PASSWORD_CFG_KEY = "jolokiaPassword";
+
+
 
   public FromProperties(Properties initialConfig) {
     super(initialConfig);
@@ -89,6 +93,18 @@ final class FromProperties extends ServerBuilder {
 
       ConstraintMapping constraintMapping = constraint();
       securityHandler.addConstraintMapping(constraintMapping);
+    } else {
+      // https://github.com/adaptris/interlok/pull/788
+      securityHandler.setAuthenticatorFactory(new Authenticator.Factory() {
+
+        @Override
+        public Authenticator getAuthenticator(Server server, ServletContext context,
+            AuthConfiguration configuration, IdentityService identityService,
+            LoginService loginService) {
+          return null;
+        }
+        
+      });
     }
 
     securityHandler.setHandler(handler);
