@@ -30,7 +30,7 @@ ext {
   organizationUrl = "http://interlok.adaptris.net"
   slf4jVersion="1.7.36"
   log4j2Version = '2.14.1'
-  mockitoVersion = '4.7.0'
+  mockitoVersion = '4.8.0'
   jolokiaVersion = '1.7.1'
 }
 
