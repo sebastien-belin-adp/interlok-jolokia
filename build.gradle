@@ -2,13 +2,13 @@ plugins {
   id 'java-library'
   id 'maven-publish'
   id 'jacoco'
-  id 'com.github.spotbugs' version '5.0.5'
-  id 'org.owasp.dependencycheck' version '6.5.3'
+  id 'com.github.spotbugs' version '5.0.12'
+  id 'org.owasp.dependencycheck' version '7.2.1'
 }
 
 ext {
-  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '4.4-SNAPSHOT'
-  releaseVersion = project.findProperty('releaseVersion') ?: '4.4-SNAPSHOT'
+  interlokCoreVersion = project.findProperty('interlokCoreVersion') ?: '4.6-SNAPSHOT'
+  releaseVersion = project.findProperty('releaseVersion') ?: '4.6-SNAPSHOT'
   nexusBaseUrl = project.findProperty('nexusBaseUrl') ?: 'https://nexus.adaptris.net/nexus'
   mavenPublishUrl = project.findProperty('mavenPublishUrl') ?: nexusBaseUrl + '/content/repositories/snapshots'
   javadocsBaseUrl = nexusBaseUrl + "/content/sites/javadocs/com/adaptris"
@@ -28,9 +28,9 @@ ext {
 
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion="1.7.35"
+  slf4jVersion="2.0.3"
   log4j2Version = '2.14.1'
-  mockitoVersion = '4.3.1'
+  mockitoVersion = '4.8.0'
   jolokiaVersion = '1.7.1'
 }
 
@@ -126,7 +126,7 @@ dependencies {
 
   implementation ("org.jolokia:jolokia-core:$jolokiaVersion")
   implementation ("org.jolokia:jolokia-jsr160:$jolokiaVersion")
-  implementation ("org.eclipse.jetty.aggregate:jetty-all:9.4.44.v20210927")
+  implementation ("org.eclipse.jetty.aggregate:jetty-all:9.4.49.v20220914")
 
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion")
   umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
@@ -137,7 +137,7 @@ dependencies {
   testImplementation ("org.mockito:mockito-core:$mockitoVersion")
   testImplementation ("org.mockito:mockito-inline:$mockitoVersion")
 
-  testImplementation ("org.awaitility:awaitility:4.1.1")
+  testImplementation ("org.awaitility:awaitility:4.2.0")
 
   javadoc("com.adaptris:interlok-core-apt:$interlokCoreVersion")
   offlineJavadocPackages ("com.adaptris:interlok-core:$interlokCoreVersion:javadoc@jar")
