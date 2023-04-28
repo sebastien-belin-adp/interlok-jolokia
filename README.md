@@ -1,6 +1,12 @@
 # interlok-jolokia
 
-[![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-jolokia.svg)](https://github.com/adaptris/interlok-jolokia/tags) ![license](https://img.shields.io/github/license/adaptris/interlok-jolokia.svg) [![Actions Status](https://github.com/adaptris/interlok-jolokia/workflows/Java%20CI/badge.svg)](https://github.com/adaptris/interlok-jolokia/actions) [![codecov](https://codecov.io/gh/adaptris/interlok-jolokia/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-jolokia) [![Total alerts](https://img.shields.io/lgtm/alerts/g/adaptris/interlok-jolokia.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adaptris/interlok-jolokia/alerts/) [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/adaptris/interlok-jolokia.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adaptris/interlok-jolokia/context:java)
+[![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-jolokia.svg)](https://github.com/adaptris/interlok-jolokia/tags)
+[![license](https://img.shields.io/github/license/adaptris/interlok-jolokia.svg)](https://github.com/adaptris/interlok-jolokia/blob/develop/LICENSE)
+[![Actions Status](https://github.com/adaptris/interlok-jolokia/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/adaptris/interlok-jolokia/actions)
+[![codecov](https://codecov.io/gh/adaptris/interlok-jolokia/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-jolokia)
+[![CodeQL](https://github.com/adaptris/interlok-jolokia/workflows/CodeQL/badge.svg)](https://github.com/adaptris/interlok-jolokia/security/code-scanning)
+[![Known Vulnerabilities](https://snyk.io/test/github/adaptris/interlok-jolokia/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/adaptris/interlok-jolokia?targetFile=build.gradle)
+[![Closed PRs](https://img.shields.io/github/issues-pr-closed/adaptris/interlok-jolokia)](https://github.com/adaptris/interlok-jolokia/pulls?q=is%3Apr+is%3Aclosed)
 
 Manage Interlok with JMX via an HTTP API.
 
