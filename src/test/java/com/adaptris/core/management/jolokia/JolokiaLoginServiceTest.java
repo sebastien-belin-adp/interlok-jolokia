@@ -1,15 +1,15 @@
 package com.adaptris.core.management.jolokia;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.eclipse.jetty.security.AbstractLoginService.UserPrincipal;
 import org.eclipse.jetty.server.UserIdentity;
 import org.eclipse.jetty.util.security.Credential;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.adaptris.security.exc.PasswordException;
 import com.adaptris.security.password.Password;
@@ -29,7 +29,6 @@ public class JolokiaLoginServiceTest {
   @Test
   public void testLoadRoleInfoInvalidUsername() throws PasswordException {
     JolokiaLoginService jolokiaLoginService = newJolokiaLoginService();
-
 
     String[] roles = jolokiaLoginService.loadRoleInfo(new UserPrincipal("invalid", null));
 

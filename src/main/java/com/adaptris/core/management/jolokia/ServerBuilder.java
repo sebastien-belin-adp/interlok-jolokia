@@ -16,26 +16,23 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class ServerBuilder {
 
-
   private enum Builder {
-    /*XML() {
-      @Override
-      public boolean canBuild(Properties p) {
-        return p.containsKey(WEB_SERVER_CONFIG_FILE_NAME_CGF_KEY);
-      }
-
-      @Override
-      public ServerBuilder builder(Properties cfg) {
-        return new FromXmlConfig(cfg);
-      }
-
-    },*/
+    /*
+     * XML() {
+     * 
+     * @Override public boolean canBuild(Properties p) { return p.containsKey(WEB_SERVER_CONFIG_FILE_NAME_CGF_KEY); }
+     * 
+     * @Override public ServerBuilder builder(Properties cfg) { return new FromXmlConfig(cfg); }
+     * 
+     * },
+     */
     PROPERTIES() {
       @Override
       public boolean canBuild(Properties p) {
@@ -46,17 +43,13 @@ public abstract class ServerBuilder {
       public ServerBuilder builder(Properties cfg) {
         return new FromProperties(cfg);
       }
-    }/*,
-    FAILSAFE() {
-      @Override
-      public boolean canBuild(Properties p) {
-        return true;
-      }
-      @Override
-      public ServerBuilder builder(Properties cfg) {
-        return new FromClasspath(cfg);
-      }
-    }*/;
+    }/*
+      * , FAILSAFE() {
+      * 
+      * @Override public boolean canBuild(Properties p) { return true; }
+      * 
+      * @Override public ServerBuilder builder(Properties cfg) { return new FromClasspath(cfg); } }
+      */;
 
     public abstract boolean canBuild(Properties p);
 
@@ -95,4 +88,5 @@ public abstract class ServerBuilder {
   protected String getConfigItem(String key, String defaultValue) {
     return getConfig().getProperty(key, defaultValue);
   }
+
 }

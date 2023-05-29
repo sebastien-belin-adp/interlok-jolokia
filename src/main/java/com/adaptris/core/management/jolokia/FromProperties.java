@@ -16,13 +16,11 @@
 package com.adaptris.core.management.jolokia;
 
 import java.util.Properties;
-import javax.servlet.ServletContext;
+
 import org.eclipse.jetty.http.HttpCompliance;
 import org.eclipse.jetty.security.Authenticator;
-import org.eclipse.jetty.security.Authenticator.AuthConfiguration;
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
-import org.eclipse.jetty.security.IdentityService;
 import org.eclipse.jetty.security.LoginService;
 import org.eclipse.jetty.security.SecurityHandler;
 import org.eclipse.jetty.security.authentication.BasicAuthenticator;
@@ -52,8 +50,6 @@ final class FromProperties extends ServerBuilder {
   public final static String JOLOKIA_CONTEXT_PATH_CFG_KEY = "jolokiaContextPath";
   public final static String JOLOKIA_USERNAME_CFG_KEY = "jolokiaUsername";
   public final static String JOLOKIA_PASSWORD_CFG_KEY = "jolokiaPassword";
-
-
 
   public FromProperties(Properties initialConfig) {
     super(initialConfig);
@@ -95,16 +91,7 @@ final class FromProperties extends ServerBuilder {
       securityHandler.addConstraintMapping(constraintMapping);
     } else {
       // https://github.com/adaptris/interlok/pull/788
-      securityHandler.setAuthenticatorFactory(new Authenticator.Factory() {
-
-        @Override
-        public Authenticator getAuthenticator(Server server, ServletContext context,
-            AuthConfiguration configuration, IdentityService identityService,
-            LoginService loginService) {
-          return null;
-        }
-        
-      });
+      securityHandler.setAuthenticatorFactory((server, context, configuration, identityService, loginService) -> null);
     }
 
     securityHandler.setHandler(handler);
@@ -135,14 +122,12 @@ final class FromProperties extends ServerBuilder {
     ServletHolder servletHolder = new ServletHolder("jolokia-agent", org.jolokia.http.AgentServlet.class);
 
     /*
-     * Debugging state after startup. Can be changed via the Config MBean during runtime.
-     * Default false
+     * Debugging state after startup. Can be changed via the Config MBean during runtime. Default false
      */
     // servletHolder.setInitParameter("debug", "false");
 
     /*
-     * Entries to keep in the history. Can be changed during runtime via the config MBean.
-     * Default 10
+     * Entries to keep in the history. Can be changed during runtime via the config MBean. Default 10
      */
     // servletHolder.setInitParameter("historyMaxEntries", "10");
 
@@ -153,29 +138,25 @@ final class FromProperties extends ServerBuilder {
     // servletHolder.setInitParameter("debugMaxEntries", "100");
 
     /*
-     * Maximum depth when traversing bean properties. If set to 0, depth checking is disabled
-     * Default 0
+     * Maximum depth when traversing bean properties. If set to 0, depth checking is disabled Default 0
      */
     servletHolder.setInitParameter("maxDepth", "15");
 
     /*
-     * Maximum size of collections returned when serializing to JSON. When set to 0 collections are not truncated.
-     * Default 0
+     * Maximum size of collections returned when serializing to JSON. When set to 0 collections are not truncated. Default 0
      */
     // servletHolder.setInitParameter("maxCollectionSize", "0");
 
     /*
      * Maximum number of objects which is traversed when serializing a single response. Use this as airbag to avoid boosting your memory and
-     * network traffic. Nevertheless when set to 0 not limit is used.
-     * Default 0
+     * network traffic. Nevertheless when set to 0 not limit is used. Default 0
      */
     // servletHolder.setInitParameter("maxObjects", "0");
 
     /*
      * Options specific for certain application server detectors. Detectors can evaluate these options and perform a specific initialization
      * based on these options. The value is a JSON object with the detector's name as key and the options as value. E.g. '{glassfish:
-     * {bootAmx: false}}' would prevent the booting of the AMX subsystem on a glassfish with is done by default.
-     * Default null
+     * {bootAmx: false}}' would prevent the booting of the AMX subsystem on a glassfish with is done by default. Default null
      */
     // servletHolder.setInitParameter("detectorOptions", "{}");
 
@@ -183,24 +164,20 @@ final class FromProperties extends ServerBuilder {
      * This option specifies in which order the key-value properties within ObjectNames as returned by "list" or "search" are returned. By
      * default this is the so called 'canonical order' in which the keys are sorted alphabetically. If this option is set to "false", then
      * the natural order is used, i.e. the object name as it was registered. This option can be overridden with a query parameter of the
-     * same name.
-     * Default true
+     * same name. Default true
      */
     // servletHolder.setInitParameter("canonicalNaming", "true");
 
     /*
      * Whether to include a stacktrace of an exception in case of an error. By default it it set to "true" in which case the stacktrace is
      * always included. If set to "false", no stacktrace is included. If the value is "runtime" a stacktrace is only included for
-     * RuntimeExceptions. This global option can be overridden with a query parameter.
-     * Default true
-     * For 2.0: Default to false
+     * RuntimeExceptions. This global option can be overridden with a query parameter. Default true For 2.0: Default to false
      */
     // servletHolder.setInitParameter("includeStackTrace", "true");
 
     /*
      * When this parameter is set to "true", then an exception thrown will be serialized as JSON and included in the response under the key
-     * "error_value". By default it is "false". This global option can be overridden by a query parameter of the same name.
-     * Default false
+     * "error_value". By default it is "false". This global option can be overridden by a query parameter of the same name. Default false
      */
     // servletHolder.setInitParameter("serializeException", "false");
 
@@ -220,9 +197,7 @@ final class FromProperties extends ServerBuilder {
     /*
      * The MIME type to return for the response. By default, this is text/plain, but it can be useful for some tools to change it to
      * application/json. Init parameters can be used to change the default mime type. Only text/plain and application/json are allowed. For
-     * any other value Jolokia will fallback to text/plain. A request parameter overrides a global
-     * configuration.
-     * Default text/plain
+     * any other value Jolokia will fallback to text/plain. A request parameter overrides a global configuration. Default text/plain
      */
     servletHolder.setInitParameter("mimeType", "application/json");
 
