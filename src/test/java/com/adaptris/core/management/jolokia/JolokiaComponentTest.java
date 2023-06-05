@@ -1,11 +1,13 @@
 package com.adaptris.core.management.jolokia;
 
-import com.adaptris.core.management.webserver.JettyServerManager;
-import com.adaptris.interlok.junit.scaffolding.util.PortManager;
 import java.time.Duration;
 import java.util.Properties;
+
 import org.awaitility.Awaitility;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import com.adaptris.core.management.webserver.JettyServerManager;
+import com.adaptris.interlok.junit.scaffolding.util.PortManager;
 
 public class JolokiaComponentTest {
 
@@ -50,14 +52,14 @@ public class JolokiaComponentTest {
     }
   }
 
-  private void stopAndDestroy(JolokiaComponent c) {
+  private void stopAndDestroy(JolokiaComponent component) {
     try {
-      if (c != null) {
-        c.stop();
-        c.destroy();
+      if (component != null) {
+        component.stop();
+        component.destroy();
       }
     } catch (Exception e) {
-
     }
   }
+
 }

@@ -1,9 +1,10 @@
 package com.adaptris.core.management.jolokia;
 
-import com.adaptris.core.management.webserver.JettyServerManager;
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.adaptris.core.management.webserver.JettyServerManager;
 
 class JettyServerWrapperImpl implements JettyServerWrapper {
 
@@ -56,4 +57,5 @@ class JettyServerWrapperImpl implements JettyServerWrapper {
       log.error("Exception while destroying Jolokia(Jetty)", ex);
     }
   }
+
 }

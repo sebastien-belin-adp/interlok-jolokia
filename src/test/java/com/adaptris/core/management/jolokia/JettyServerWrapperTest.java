@@ -1,20 +1,21 @@
 package com.adaptris.core.management.jolokia;
 
-import com.adaptris.core.management.webserver.JettyServerManager;
-import java.io.IOException;
 import org.eclipse.jetty.server.Server;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import com.adaptris.core.management.webserver.JettyServerManager;
 
 public class JettyServerWrapperTest {
 
   @Test
   public void testDefaultMethods() throws Exception {
-    JettyServerWrapper w = new JettyServerWrapper() {    };
-    w.register();
-    w.start();
-    w.stop();
-    w.destroy();
+    JettyServerWrapper wrapper = new JettyServerWrapper() {
+    };
+    wrapper.register();
+    wrapper.start();
+    wrapper.stop();
+    wrapper.destroy();
   }
 
   @Test
@@ -83,4 +84,5 @@ public class JettyServerWrapperTest {
   public interface Runner {
     void execute() throws Exception;
   }
+
 }
