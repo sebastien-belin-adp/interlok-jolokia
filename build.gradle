@@ -32,6 +32,7 @@ ext {
   log4j2Version = '2.14.1'
   mockitoVersion = '5.2.0'
   jolokiaVersion = '1.7.2'
+  jettyVersion = '10.0.15'
 }
 
 ext.gitBranchNameOrTimestamp = { branchName ->
@@ -117,6 +118,7 @@ configurations.all {
 }
 
 dependencies {
+  api (platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
   // Since this is all maven now, we should be in a position where SNAPSHOT is auto
   // regarded as CHANGING...
   api ("com.adaptris:interlok-core:$interlokCoreVersion")
@@ -124,8 +126,7 @@ dependencies {
 
   implementation ("org.jolokia:jolokia-core:$jolokiaVersion")
   implementation ("org.jolokia:jolokia-jsr160:$jolokiaVersion")
-  implementation ("org.eclipse.jetty.aggregate:jetty-all:9.4.51.v20230217")
-
+  
   annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion")
   umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
 
@@ -202,10 +203,10 @@ javadoc {
 }
 
 jacocoTestReport {
-    reports {
-        xml.required= true
-        html.required= true
-    }
+  reports {
+    xml.required= true
+    html.required= true
+  }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

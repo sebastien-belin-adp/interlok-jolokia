@@ -61,20 +61,17 @@ public class JolokiaComponent extends MgmtComponentImpl {
     // This is to make sure we don't break the barrier before the real delay is up.
     //
     final long barrierDelay = STARTUP_WAIT;
-    ManagedThreadFactory.createThread("JolokiaEmbeddedJettyStart", new Runnable() {
-      @Override
-      public void run() {
-        try {
-          log.debug("Creating Jetty wrapper");
-          Thread.currentThread().setContextClassLoader(classLoader);
-          wrapper = new JettyServerWrapperImpl(ServerBuilder.build(properties));
-          wrapper.register();
-          // Wait until at least the server is registered.
-          barrier.await(barrierDelay, TimeUnit.MILLISECONDS);
-          wrapper.start();
-        } catch (final Exception ex) {
-          log.error("Could not create wrapper", ex);
-        }
+    ManagedThreadFactory.createThread("JolokiaEmbeddedJettyStart", (Runnable) () -> {
+      try {
+        log.debug("Creating Jetty wrapper");
+        Thread.currentThread().setContextClassLoader(classLoader);
+        wrapper = new JettyServerWrapperImpl(ServerBuilder.build(properties));
+        wrapper.register();
+        // Wait until at least the server is registered.
+        barrier.await(barrierDelay, TimeUnit.MILLISECONDS);
+        wrapper.start();
+      } catch (final Exception ex) {
+        log.error("Could not create wrapper", ex);
       }
     }).start();
     barrier.await(barrierDelay, TimeUnit.MILLISECONDS);
