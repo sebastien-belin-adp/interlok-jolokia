@@ -225,8 +225,9 @@ final class FromProperties extends ServerBuilder {
   }
 
   private ServerConnector createConnector(Server server) {
-    ServerConnector connector = new ServerConnector(server, -1, -1,
-        new HttpConnectionFactory(configure(new HttpConfiguration()), HttpCompliance.RFC2616));
+    HttpConfiguration httpConfig = new HttpConfiguration();
+    httpConfig.setHttpCompliance(HttpCompliance.RFC2616);
+    ServerConnector connector = new ServerConnector(server, -1, -1, new HttpConnectionFactory(configure(httpConfig)));
     connector.setPort(Integer.parseInt(getConfigItem(JOLOKIA_PORT_CFG_KEY, DEFAULT_JOLOKIA_JETTY_PORT)));
     return connector;
   }

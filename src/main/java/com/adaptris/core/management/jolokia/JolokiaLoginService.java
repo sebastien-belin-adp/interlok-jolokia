@@ -1,7 +1,11 @@
 package com.adaptris.core.management.jolokia;
 
+import java.util.List;
+
 import org.eclipse.jetty.security.AbstractLoginService;
 import org.eclipse.jetty.security.LoginService;
+import org.eclipse.jetty.security.RolePrincipal;
+import org.eclipse.jetty.security.UserPrincipal;
 import org.eclipse.jetty.util.security.Password;
 
 import com.adaptris.security.exc.PasswordException;
@@ -17,11 +21,11 @@ public class JolokiaLoginService extends AbstractLoginService implements LoginSe
   }
 
   @Override
-  protected String[] loadRoleInfo(UserPrincipal user) {
+  protected List<RolePrincipal> loadRoleInfo(UserPrincipal user) {
     if (username.equals(user.getName())) {
-      return new String[] { "jolokia" };
+      return List.of(new RolePrincipal("jolokia"));
     }
-    return null;
+    return List.of();
   }
 
   @Override
